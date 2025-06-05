@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["express", "mongodb", "api", "crud", "inventory"],
-  "author": "Owen kasule Muhereza",
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
