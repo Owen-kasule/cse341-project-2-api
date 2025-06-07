@@ -1,8 +1,8 @@
 import express from 'express';
 import 'dotenv/config';
 import { connectDB } from './src/config/db.js';
-import itemRoutes from './src/routes/itemRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
+import itemRoutes from './src/routes/itemRoutes.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
