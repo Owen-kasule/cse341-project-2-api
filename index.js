@@ -22,7 +22,7 @@ const swaggerDefinition = {
   servers: [
     {
       url: process.env.NODE_ENV === 'production' 
-        ? 'https://your-render-app.onrender.com' 
+        ? 'https://cse341-project-2-api.onrender.com'  // Fixed URL
         : `http://localhost:${process.env.PORT || 8080}`,
       description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server'
     }
@@ -30,7 +30,7 @@ const swaggerDefinition = {
 };
 
 const options = {
-  swaggerDefinition,
+  definition: swaggerDefinition,  // Fixed property name
   apis: ['./src/routes/*.js'],
 };
 
@@ -41,7 +41,7 @@ app.get('/', (req, res) => res.send('Hello World - CSE 341 Project 2 API'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
-console.log('User routes registered!');  // ← Add this line to see if it loads
+console.log('User routes registered!');
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
