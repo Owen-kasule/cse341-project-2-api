@@ -8,7 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 
 await connectDB();  // Connect to MongoDB
 
-const app = express();
+const app = express();  // This is CORRECT in the main file
 app.use(express.json());  // Middleware for JSON parsing
 
 // Swagger configuration
@@ -41,6 +41,7 @@ app.get('/', (req, res) => res.send('Hello World - CSE 341 Project 2 API'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
+console.log('User routes registered!');  // ← Add this line to see if it loads
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
