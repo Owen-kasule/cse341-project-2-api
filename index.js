@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import { connectDB } from './src/config/db.js';
 import itemRoutes from './src/routes/itemRoutes.js';
+import userRoutes from './src/routes/userRoutes.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -39,6 +40,7 @@ const swaggerSpec = swaggerJSDoc(options);
 app.get('/', (req, res) => res.send('Hello World - CSE 341 Project 2 API'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/items', itemRoutes);
+app.use('/users', userRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));

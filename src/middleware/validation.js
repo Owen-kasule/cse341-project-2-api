@@ -60,3 +60,25 @@ export const validate = (req, res, next) => {
   }
   next();
 };
+
+// Add these new validation rules for users
+export const userValidationRules = () => {
+  return [
+    body('username')
+      .notEmpty()
+      .withMessage('Username is required')
+      .isLength({ min: 3, max: 30 })
+      .withMessage('Username must be between 3 and 30 characters')
+      .trim(),
+    
+    body('email')
+      .isEmail()
+      .withMessage('Please provide a valid email address')
+      .normalizeEmail(),
+    
+    body('role')
+      .optional()
+      .isIn(['admin', 'user', 'manager'])
+      .withMessage('Role must be one of: admin, user, manager')
+  ];
+};
