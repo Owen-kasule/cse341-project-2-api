@@ -1,0 +1,222 @@
+### filepath: /home/kasule/Documents/Spring Semester 2025/CSE341 - Web Services/cse341-project-2-api/api-tests.http
+
+### Variables - Choose one environment
+@baseUrl = http://localhost:8080
+# @baseUrl = https://cse341-project-2-api.onrender.com
+
+### ========================================
+### QUICK HEALTH CHECK
+### ========================================
+
+### 1. Test server is running
+GET {{baseUrl}}
+Content-Type: application/json
+
+### 2. Check Swagger Documentation
+GET {{baseUrl}}/api-docs
+Accept: text/html
+
+### ========================================
+### ITEMS COLLECTION TESTS
+### ========================================
+
+### 3. Get all items
+GET {{baseUrl}}/items
+Content-Type: application/json
+
+### 4. Create a new item
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro",
+  "description": "Latest Apple smartphone with titanium design and advanced camera system",
+  "price": 1199.99,
+  "category": "Electronics",
+  "stock": 25
+}
+
+### 5. Create another item for testing
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "Nike Air Max 270",
+  "description": "Comfortable running shoes with Air Max technology",
+  "price": 150.00,
+  "category": "Sports",
+  "stock": 100
+}
+
+### 6. Get item by ID (replace ITEM_ID_HERE with actual ID from POST response above)
+GET {{baseUrl}}/items/ITEM_ID_HERE
+Content-Type: application/json
+
+### 7. Update an item (replace ITEM_ID_HERE with actual ID)
+PUT {{baseUrl}}/items/ITEM_ID_HERE
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro Max",
+  "description": "Latest Apple smartphone with titanium design, advanced camera system, and larger display",
+  "price": 1299.99,
+  "category": "Electronics",
+  "stock": 30
+}
+
+### ========================================
+### USERS COLLECTION TESTS
+### ========================================
+
+### 8. Get all users
+GET {{baseUrl}}/users
+Content-Type: application/json
+
+### 9. Create a new user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "email": "john.doe@example.com",
+  "role": "user"
+}
+
+### 10. Create another user for testing
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "janesmith",
+  "email": "jane.smith@example.com",
+  "role": "manager"
+}
+
+### 11. Create an admin user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "email": "admin@example.com",
+  "role": "admin"
+}
+
+### 12. Get user by ID (replace USER_ID_HERE with actual ID from POST response above)
+GET {{baseUrl}}/users/USER_ID_HERE
+Content-Type: application/json
+
+### 13. Update a user (replace USER_ID_HERE with actual ID)
+PUT {{baseUrl}}/users/USER_ID_HERE
+Content-Type: application/json
+
+{
+  "username": "johndoe_updated",
+  "email": "john.doe.updated@example.com",
+  "role": "manager"
+}
+
+### ========================================
+### VALIDATION ERROR TESTS
+### ========================================
+
+### 14. Test item validation - missing required fields
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "Test"
+}
+
+### 15. Test item validation - invalid category
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "Test Item",
+  "description": "This is a test item",
+  "price": 10.99,
+  "category": "InvalidCategory",
+  "stock": 5
+}
+
+### 16. Test item validation - negative price
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "Test Item",
+  "description": "This is a test item with a very long description that should be valid",
+  "price": -10.99,
+  "category": "Electronics",
+  "stock": 5
+}
+
+### 17. Test user validation - invalid email
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "invalid-email",
+  "role": "user"
+}
+
+### 18. Test user validation - username too short
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "ab",
+  "email": "test@example.com",
+  "role": "user"
+}
+
+### ========================================
+### ERROR HANDLING TESTS
+### ========================================
+
+### 19. Test invalid ObjectId for items
+GET {{baseUrl}}/items/invalid-id-format
+
+### 20. Test invalid ObjectId for users
+GET {{baseUrl}}/users/invalid-id-format
+
+### 21. Test non-existent item (valid ObjectId format but doesn't exist)
+GET {{baseUrl}}/items/507f1f77bcf86cd799439011
+
+### 22. Test non-existent user (valid ObjectId format but doesn't exist)
+GET {{baseUrl}}/users/507f1f77bcf86cd799439011
+
+### ========================================
+### DELETE TESTS (Do these last)
+### ========================================
+
+### 23. Delete an item (replace ITEM_ID_HERE with actual ID)
+DELETE {{baseUrl}}/items/ITEM_ID_HERE
+
+### 24. Delete a user (replace USER_ID_HERE with actual ID)
+DELETE {{baseUrl}}/users/USER_ID_HERE
+
+### ========================================
+### ONLINE DEPLOYMENT TESTS
+### ========================================
+
+### Switch to online environment by commenting/uncommenting the baseUrl variables above
+### Then run key tests to verify deployment works
+
+### 25. Test online server health
+# GET https://cse341-project-2-api.onrender.com
+# Content-Type: application/json
+
+### 26. Test online Swagger docs
+# GET https://cse341-project-2-api.onrender.com/api-docs
+# Accept: text/html
+
+### 27. Test online items endpoint
+# GET https://cse341-project-2-api.onrender.com/items
+# Content-Type: application/json
+
+### 28. Test online users endpoint
+# GET https://cse341-project-2-api.onrender.com/users
+# Content-Type: application/json
