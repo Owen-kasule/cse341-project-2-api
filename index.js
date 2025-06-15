@@ -13,6 +13,14 @@ await connectDB();  // Connect to MongoDB
 const app = express();  // This is CORRECT in the main file
 app.use(express.json());  // Middleware for JSON parsing
 
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your_secret',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Swagger configuration
 const swaggerDefinition = {
   openapi: '3.0.0',
