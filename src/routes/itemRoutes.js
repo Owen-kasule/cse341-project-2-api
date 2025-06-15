@@ -1,6 +1,7 @@
 import express from 'express';
 import Item from '../models/Item.js';
 import { itemValidationRules, validateObjectId, validate } from '../middleware/validation.js';
+import { ensureAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -369,6 +370,10 @@ router.delete('/:id', validateObjectId(), validate, async (req, res) => {
       message: err.message 
     });
   }
+});
+
+router.get('/users', ensureAuth, async (req, res) => {
+  // Only accessible if authenticated
 });
 
 export default router;

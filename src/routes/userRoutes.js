@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/User.js';
 import { userValidationRules, validateObjectId, validate } from '../middleware/validation.js';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
@@ -56,7 +57,9 @@ const router = express.Router();
  * @swagger
  * /users:
  *   get:
- *     summary: Returns the list of all users
+ *     summary: Get all users (protected)
+ *     security:
+ *       - OAuth2: [email]
  *     tags: [Users]
  *     responses:
  *       200:
@@ -165,7 +168,8 @@ router.get('/:id', validateObjectId(), validate, async (req, res) => {
  */
 router.post('/', userValidationRules(), validate, async (req, res) => {
   try {
-    const user = new User(req.body);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = new User({ ...req.body, password: hashedPassword });
     const savedUser = await user.save();
     res.status(201).json(savedUser);
   } catch (error) {

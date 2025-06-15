@@ -33,11 +33,32 @@ const swaggerDefinition = {
   servers: [
     {
       url: process.env.NODE_ENV === 'production' 
-        ? 'https://cse341-project-2-api.onrender.com'  // Fixed URL
+        ? 'https://cse341-project-2-api.onrender.com'
         : `http://localhost:${process.env.PORT || 8080}`,
       description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server'
     }
   ],
+  components: {
+    securitySchemes: {
+      OAuth2: {
+        type: 'oauth2',
+        flows: {
+          authorizationCode: {
+            authorizationUrl: 'https://accounts.google.com/o/oauth2/auth',
+            tokenUrl: 'https://accounts.google.com/o/oauth2/token',
+            scopes: {
+              email: 'Access email'
+            }
+          }
+        }
+      }
+    }
+  },
+  security: [
+    {
+      OAuth2: ['email']
+    }
+  ]
 };
 
 const options = {
