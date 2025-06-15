@@ -5,6 +5,8 @@ import userRoutes from './src/routes/userRoutes.js';
 import itemRoutes from './src/routes/itemRoutes.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import session from 'express-session';
+import passport from 'passport';
 
 await connectDB();  // Connect to MongoDB
 
