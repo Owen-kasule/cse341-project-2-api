@@ -8,6 +8,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import session from 'express-session';
 import passport from 'passport';
+import { ensureAuth } from './src/middleware/auth.js';
 
 await connectDB();  // Connect to MongoDB
 
@@ -71,9 +72,13 @@ const swaggerSpec = swaggerJSDoc(options);
 // Routes
 app.get('/', (req, res) => res.send('Hello World - CSE 341 Project 2 API'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/auth', authRoutes);
+
+// Protect everything else
+app.use(ensureAuth);
+
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
-app.use('/auth', authRoutes);
 console.log('User routes registered!');
 
 const PORT = process.env.PORT || 8080;
