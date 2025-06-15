@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { connectDB } from './src/config/db.js';
 import userRoutes from './src/routes/userRoutes.js';
 import itemRoutes from './src/routes/itemRoutes.js';
+import authRoutes from './src/routes/auth.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import session from 'express-session';
@@ -51,6 +52,7 @@ app.get('/', (req, res) => res.send('Hello World - CSE 341 Project 2 API'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/items', itemRoutes);
 app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 console.log('User routes registered!');
 
 const PORT = process.env.PORT || 8080;
