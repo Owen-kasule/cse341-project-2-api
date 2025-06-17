@@ -8,9 +8,8 @@ const router = express.Router();
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'
+  callbackURL: '/auth/google/callback'  // Should be exactly this
 }, (accessToken, refreshToken, profile, done) => {
-  // Optionally, save/find user in DB here
   return done(null, profile);
 }));
 
