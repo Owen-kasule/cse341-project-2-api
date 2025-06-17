@@ -47,8 +47,11 @@ const swaggerDefinition = {
           authorizationCode: {
             authorizationUrl: 'https://accounts.google.com/o/oauth2/auth',
             tokenUrl: 'https://accounts.google.com/o/oauth2/token',
+            refreshUrl: 'https://accounts.google.com/o/oauth2/token',
             scopes: {
-              email: 'Access email'
+              'openid': 'OpenID Connect',
+              'profile': 'Access profile information',
+              'email': 'Access email address'
             }
           }
         }
@@ -57,7 +60,7 @@ const swaggerDefinition = {
   },
   security: [
     {
-      OAuth2: ['email']
+      OAuth2: ['openid', 'profile', 'email']
     }
   ]
 };
