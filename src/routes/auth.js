@@ -37,4 +37,12 @@ router.get('/failure', (req, res) => {
   res.send('Failed to authenticate.');
 });
 
+router.get('/protected', ensureAuth, (req, res) => {
+  res.json({ 
+    message: 'Authentication successful! You are logged in.',
+    user: req.user.displayName || req.user.name || 'Authenticated User',
+    timestamp: new Date().toISOString()
+  });
+});
+
 export default router;
