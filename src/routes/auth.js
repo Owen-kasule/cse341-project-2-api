@@ -22,10 +22,24 @@ router.get('/google', passport.authenticate('google', {
   scope: ['profile', 'email']
 }));
 
+// Add this route for Swagger OAuth integration
+router.get('/swagger-login', (req, res) => {
+  const redirectUrl = req.query.redirect_uri || '/api-docs';
+  req.session.swaggerRedirect = redirectUrl;
+  res.redirect('/auth/google');
+});
+
 router.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/auth/failure'
 }), (req, res) => {
-  res.redirect('/protected');
+  // Check if this is from Swagger
+  if (req.session.swaggerRedirect) {
+    const redirect = req.session.swaggerRedirect;
+    delete req.session.swaggerRedirect;
+    res.redirect(redirect);
+  } else {
+    res.redirect('/auth/protected');
+  }
 });
 
 router.get('/logout', (req, res) => {
