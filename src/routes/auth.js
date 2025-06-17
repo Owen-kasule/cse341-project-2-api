@@ -8,7 +8,9 @@ const router = express.Router();
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'  // Should be exactly this
+  callbackURL: process.env.NODE_ENV === 'production'
+    ? 'https://cse341-project-2-api.onrender.com/auth/google/callback'
+    : 'http://localhost:8080/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
   return done(null, profile);
 }));
